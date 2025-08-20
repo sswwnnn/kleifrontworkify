@@ -47,7 +47,7 @@ const router = createBrowserRouter([
       </RoleRoute>
     ),
     children: [
-      // 👇 admin/hr landing
+      //  admin/hr landing
       {
         index: true,
         element: (
@@ -57,7 +57,7 @@ const router = createBrowserRouter([
         ),
       },
 
-      // 👇 employee landing
+      //  employee landing
       {
         path: "employee-dashboard",
         element: (
@@ -120,7 +120,7 @@ const router = createBrowserRouter([
           </RoleRoute>
         ),
       },
-      // Removed modal routes - modals should be managed within SchedulingPage
+     
       {
         path: "details/:email",
         element: (
