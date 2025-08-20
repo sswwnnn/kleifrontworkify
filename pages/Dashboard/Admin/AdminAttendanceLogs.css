@@ -473,3 +473,21 @@
     gap: 10px;
   }
 }
+
+
+.add-logs-btn {
+  background-color: #FF5003;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-weight: 600;
+  cursor: pointer;
+  height: fit-content;
+  transition: background-color 0.3s ease;
+  margin-left: 10px;
+}
+
+.add-logs-btn:hover {
+  background-color: #E6460A;
+}
