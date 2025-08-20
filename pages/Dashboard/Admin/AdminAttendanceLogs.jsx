@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './AdminAttendanceLogs.css';
+import AddLogsModal from './AddLogsModal';
 
 const AdminAttendanceLogs = () => {
   const [selectedDepartment, setSelectedDepartment] = useState('All Departments');
@@ -7,6 +8,7 @@ const AdminAttendanceLogs = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [entriesPerPage, setEntriesPerPage] = useState(10);
   const [editingRow, setEditingRow] = useState(null);
+  const [showAddModal, setShowAddModal] = useState(false);
 
   const [attendanceData, setAttendanceData] = useState([
     {
@@ -88,30 +90,51 @@ const AdminAttendanceLogs = () => {
     setEditingRow(null);
   };
 
+  const handleAddLog = () => {
+    setShowAddModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setShowAddModal(false);
+  };
+
+  const handleSaveNewLog = (newLogData) => {
+    const newId = Math.max(...attendanceData.map(item => item.id)) + 1;
+    const newLogEntry = {
+      id: newId,
+      ...newLogData
+    };
+
+    setAttendanceData(prev => [...prev, newLogEntry]);
+    setShowAddModal(false);
+  };
+
+  const calculateHours = (clockIn, clockOut) => {
+    if (clockIn === '--' || clockOut === '--' || !clockIn || !clockOut) {
+      return { totalHrs: '0', regularHrs: '0', overtime: '0' };
+    }
+    
+    const startTime = new Date(`2024-01-01 ${clockIn}`);
+    const endTime = new Date(`2024-01-01 ${clockOut}`);
+    const diffMs = endTime - startTime;
+    const totalHours = diffMs / (1000 * 60 * 60);
+    
+    const regularHrs = Math.min(totalHours, 8);
+    const overtime = Math.max(0, totalHours - 8);
+    
+    return {
+      totalHrs: totalHours.toFixed(1),
+      regularHrs: regularHrs.toFixed(1),
+      overtime: overtime.toFixed(1)
+    };
+  };
+
   const EditableRow = ({ item }) => {
     const [editData, setEditData] = useState({
       clockIn: item.clockIn,
       clockOut: item.clockOut,
       status: item.status
     });
-
-    const calculateHours = (clockIn, clockOut) => {
-      if (clockIn === '--' || clockOut === '--') return { totalHrs: '0', regularHrs: '0', overtime: '0' };
-      
-      const startTime = new Date(`2024-01-01 ${clockIn}`);
-      const endTime = new Date(`2024-01-01 ${clockOut}`);
-      const diffMs = endTime - startTime;
-      const totalHours = diffMs / (1000 * 60 * 60);
-      
-      const regularHrs = Math.min(totalHours, 8);
-      const overtime = Math.max(0, totalHours - 8);
-      
-      return {
-        totalHrs: totalHours.toFixed(1),
-        regularHrs: regularHrs.toFixed(1),
-        overtime: overtime.toFixed(1)
-      };
-    };
 
     const handleInputChange = (field, value) => {
       setEditData(prev => ({
@@ -209,6 +232,7 @@ const AdminAttendanceLogs = () => {
         </div>
 
         <button className="get-employees-btn">Get Employees</button>
+        <button className="add-logs-btn" onClick={handleAddLog}>Add Logs</button>
       </div>
 
       <div className="table-controls">
@@ -297,6 +321,13 @@ const AdminAttendanceLogs = () => {
           <button className="page-btn">Next</button>
         </div>
       </div>
+
+      <AddLogsModal 
+        show={showAddModal}
+        onClose={handleCloseModal}
+        onSave={handleSaveNewLog}
+        calculateHours={calculateHours}
+      />
     </div>
   );
 };
