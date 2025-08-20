@@ -23,7 +23,7 @@ const AdminAttendanceReport = () => {
 
   const employees = [
     {
-      id: 'EMP1',
+      id: '',
       name: 'Regine Hambiol',
       attendance: {
         1: 'P', 2: 'P', 3: 'L', 4: 'P', 5: 'P', 6: 'OFF', 7: 'OFF',
@@ -37,7 +37,7 @@ const AdminAttendanceReport = () => {
       totalLeaves: 3
     },
     {
-      id: 'EMP2',
+      id: '',
       name: 'Lim Alcovendas',
       attendance: {
         1: 'P', 2: 'P', 3: 'P', 4: 'P', 5: 'P', 6: 'OFF', 7: 'OFF',
@@ -51,7 +51,7 @@ const AdminAttendanceReport = () => {
       totalLeaves: 4
     },
     {
-      id: 'EMP3',
+      id: '',
       name: 'Klei Ishia Pagatpatan',
       attendance: {
         1: 'L', 2: 'P', 3: 'P', 4: 'NP', 5: 'NP', 6: 'OFF', 7: 'OFF',
