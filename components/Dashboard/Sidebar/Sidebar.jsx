@@ -5,13 +5,16 @@ import {
   FaClipboard,
   FaEnvelope,
   FaUserAlt,
+  FaUsers,
   FaSignOutAlt,
   FaBuilding,
   FaClock,
   FaFileAlt,
+  FaCalendarAlt,
+  FaCalendarCheck, 
   FaChevronDown,
   FaChevronRight,
-  FaCalendarAlt,
+  FaWallet,
 } from "react-icons/fa";
 import { RxDashboard } from "react-icons/rx";
 import { NavLink, useNavigate } from "react-router-dom";
@@ -21,6 +24,7 @@ import "./Sidebar.css";
 const Sidebar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [attendanceOpen, setAttendanceOpen] = useState(false);
+  const [leaveOpen, setLeaveOpen] = useState(false);
   const navigate = useNavigate();
   const role = getUserRole(); 
 
@@ -37,9 +41,13 @@ const Sidebar = () => {
     setAttendanceOpen(!attendanceOpen);
   };
 
+  const toggleLeave = () => {
+    setLeaveOpen(!leaveOpen);
+  };
+
   return (
     <div className="sidebar-container">
-      {/* Hamburger Icon */}
+    
       <button
         onClick={() => setIsOpen(!isOpen)}
         className="hamburger-button"
@@ -51,7 +59,7 @@ const Sidebar = () => {
         )}
       </button>
 
-      {/* Sidebar */}
+     
       <aside
         className={`sidebar ${isOpen ? "sidebar-open" : "sidebar-closed"}`}
       >
@@ -86,6 +94,21 @@ const Sidebar = () => {
                     </NavLink>
                   </li>
 
+                  {/* Admin only */}
+                  {role === "admin" && (
+                    <li>
+                      <NavLink
+                        to="/dashboard/users"
+                        className={({ isActive }) =>
+                          isActive ? "nav-item active" : "nav-item"
+                        }
+                      >
+                        <FaUsers className="nav-icon" />{" "}
+                        <span>Users</span>
+                      </NavLink>
+                    </li>
+                  )}
+
                   <li>
                     <NavLink
                       to="/dashboard/employee-list"
@@ -117,12 +140,12 @@ const Sidebar = () => {
                         isActive ? "nav-item active" : "nav-item"
                       }
                     >
-                      <FaCalendarAlt className="nav-icon" />
+                      <FaCalendarAlt className="nav-icon" /> 
                       <span>Schedule</span>
                     </NavLink>
                   </li>
-
-                  {/* Attendance Dropdown */}
+                  
+                
                   <li>
                     <div 
                       className="nav-item dropdown-toggle"
@@ -137,7 +160,7 @@ const Sidebar = () => {
                         <FaChevronRight className="dropdown-icon" />
                       )}
                     </div>
-                    
+
                     {attendanceOpen && (
                       <ul className="dropdown-menu">
                         <li>
@@ -147,8 +170,8 @@ const Sidebar = () => {
                               isActive ? "nav-item sub-item active" : "nav-item sub-item"
                             }
                           >
-                            <FaClock className="nav-icon" />
-                            <span>Logs</span>
+                            <FaClock  className="nav-icon" />
+                            <span> Logs</span>
                           </NavLink>
                         </li>
                         <li>
@@ -160,6 +183,50 @@ const Sidebar = () => {
                           >
                             <FaFileAlt className="nav-icon" />
                             <span>Report</span>
+                          </NavLink>
+                        </li>
+                      </ul>
+                    )}
+                  </li>
+
+                 
+                  <li>
+                    <div 
+                      className="nav-item dropdown-toggle"
+                      onClick={toggleLeave}
+                      style={{ cursor: "pointer" }}
+                    >
+                      <FaCalendarCheck className="nav-icon" />
+                      <span>Leave Management</span>
+                      {leaveOpen ? (
+                        <FaChevronDown className="dropdown-icon" />
+                      ) : (
+                        <FaChevronRight className="dropdown-icon" />
+                      )}
+                    </div>
+
+                    {leaveOpen && (
+                      <ul className="dropdown-menu">
+                        <li>
+                          <NavLink
+                            to="/dashboard/leave-request"
+                            className={({ isActive }) =>
+                              isActive ? "nav-item sub-item active" : "nav-item sub-item"
+                            }
+                          >
+                            <FaCalendarCheck className="nav-icon" />
+                            <span>Leave Request</span>
+                          </NavLink>
+                        </li>
+                        <li>
+                          <NavLink
+                            to="/dashboard/leave-balance"
+                            className={({ isActive }) =>
+                              isActive ? "nav-item sub-item active" : "nav-item sub-item"
+                            }
+                          >
+                            <FaWallet className="nav-icon" />
+                            <span>Leave Balance</span>
                           </NavLink>
                         </li>
                       </ul>
@@ -190,12 +257,12 @@ const Sidebar = () => {
 
                   <li>
                     <NavLink
-                      to="/dashboard/feedback"
+                      to="/dashboard/inquiries"
                       className={({ isActive }) =>
                         isActive ? "nav-item active" : "nav-item"
                       }
                     >
-                      <FaEnvelope className="nav-icon" /> <span>Feedback</span>
+                      <FaEnvelope className="nav-icon" /> <span>Inquiries</span>
                     </NavLink>
                   </li>
                 </>
@@ -215,8 +282,7 @@ const Sidebar = () => {
                       <span>Employee Dashboard</span>
                     </NavLink>
                   </li>
-
-                  {/* Attendance Dropdown for Employee */}
+                 
                   <li>
                     <div 
                       className="nav-item dropdown-toggle"
@@ -258,6 +324,18 @@ const Sidebar = () => {
                         </li>
                       </ul>
                     )}
+                  </li>
+
+                  <li>
+                    <NavLink
+                      to="/dashboard/employee-leave-management"
+                      className={({ isActive }) =>
+                        isActive ? "nav-item active" : "nav-item"
+                      }
+                    >
+                      <FaCalendarCheck className="nav-icon" />
+                      <span>Leave Management</span>
+                    </NavLink>
                   </li>
 
                   <li>
