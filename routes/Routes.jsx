@@ -1,18 +1,20 @@
 import { createBrowserRouter } from "react-router";
 import MainLayout from "../layouts/MainLayout";
 import ContactUs from "../pages/ContactUs/ContactUs";
-import Feedback from "../pages/Dashboard/Admin/Feedback";
-import Payroll from "../pages/Dashboard/Admin/Payroll";
-import VerifiedEmployees from "../pages/Dashboard/Admin/VerifiedEmployees";
+import Inquiries from "../pages/Dashboard/Admin/Inquiries";
+import Users from "../pages/Dashboard/Admin/Users";
 import AdminAttendanceLogs from "../pages/Dashboard/Admin/AdminAttendanceLogs";
 import AdminAttendanceReport from "../pages/Dashboard/Admin/AdminAttendanceReport";
 import SchedulingPage from "../pages/Dashboard/Admin/SchedulingPage";
 import DashboardOverview from "../pages/Dashboard/DashboardOverview/DashboardOverview";
 import EmployeeDashboard from "../pages/Dashboard/DashboardOverview/EmployeeDashboard"; 
-import PaymentHistory from "../pages/Dashboard/Employee/PaymentHistory";
 import Task from "../pages/Dashboard/Employee/Task";
 import EmployeeAttendanceLogs from "../pages/Dashboard/Employee/EmployeeAttendanceLogs";
 import EmployeeAttendanceReport from "../pages/Dashboard/Employee/EmployeeAttendanceReport";
+import EmployeeLeaveManagement from "../pages/Dashboard/Employee/EmployeeLeaveManagement";
+import AdminLeaveManagement from "../pages/Dashboard/Admin/AdminLeaveRequest";
+import AdminLeaveRequest from "../pages/Dashboard/Admin/AdminLeaveRequest";
+import AdminLeaveBalance from "../pages/Dashboard/Admin/AdminLeaveBalances";
 import EmployeeDetails from "../pages/Dashboard/Hr/EmployeeDetails";
 import EmployeeList from "../pages/Dashboard/Hr/EmployeeList";
 import Progress from "../pages/Dashboard/Hr/Progress";
@@ -23,7 +25,6 @@ import Home from "../pages/Home/Home";
 import RegistrationPage from "../pages/SignUp/Register";
 import DashboardLayout from "./../layouts/DashboardLayout";
 import Login from "./../pages/Login/Login";
-import Payment from "./../pages/Payment/Payment";
 import RoleRoute from "./RoleRoute";
 
 const router = createBrowserRouter([
@@ -47,7 +48,7 @@ const router = createBrowserRouter([
       </RoleRoute>
     ),
     children: [
-      //  admin/hr landing
+      // admin/hr landing
       {
         index: true,
         element: (
@@ -57,7 +58,7 @@ const router = createBrowserRouter([
         ),
       },
 
-      //  employee landing
+      // employee landing
       {
         path: "employee-dashboard",
         element: (
@@ -89,10 +90,18 @@ const router = createBrowserRouter([
 
       // admin/hr only
       {
-        path: "feedback",
+        path: "inquiries",
         element: (
           <RoleRoute allowed={["admin", "hr"]}>
-            <Feedback />
+            <Inquiries />
+          </RoleRoute>
+        ),
+      },
+      {
+        path: "users",
+        element: (
+          <RoleRoute allowed={["admin"]}>
+            <Users />
           </RoleRoute>
         ),
       },
@@ -120,7 +129,23 @@ const router = createBrowserRouter([
           </RoleRoute>
         ),
       },
-     
+      // admin/hr leave management
+      {
+        path: "leave-request",
+        element: (
+          <RoleRoute allowed={["admin", "hr"]}>
+            <AdminLeaveRequest />
+          </RoleRoute>
+        ),
+      },
+      {
+        path: "leave-balance",
+        element: (
+          <RoleRoute allowed={["admin", "hr"]}>
+            <AdminLeaveBalance />
+          </RoleRoute>
+        ),
+      },
       {
         path: "details/:email",
         element: (
@@ -147,7 +172,7 @@ const router = createBrowserRouter([
       },
 
       // employee only
-      {
+       {
         path: "employee-attendance-logs",
         element: (
           <RoleRoute allowed={["employee"]}>
@@ -160,6 +185,14 @@ const router = createBrowserRouter([
         element: (
           <RoleRoute allowed={["employee"]}>
             <EmployeeAttendanceReport />
+          </RoleRoute>
+        ),
+      },
+      {
+        path: "employee-leave-management",
+        element: (
+          <RoleRoute allowed={["employee"]}>
+            <EmployeeLeaveManagement />
           </RoleRoute>
         ),
       },
