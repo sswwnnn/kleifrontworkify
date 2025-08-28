@@ -1,0 +1,292 @@
+.hr-dashboard-container {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  background-color: #f9fafb;
+  color: #1e293b;
+}
+
+.hr-dashboard-stats-row {
+  display: flex;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.hr-stat-card {
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 2px 8px rgb(0 0 0 / 0.1);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-width: 100px;
+  height: 60%;
+  flex: 1;
+  color: white;
+  cursor: default;
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  position: relative;
+  top: 0;
+}
+
+.hr-stat-card:hover {
+  transform: translateY(-6px) scale(1.01);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25);
+  animation: float-gentle 3s ease-in-out infinite;
+}
+
+@keyframes float-gentle {
+  0% {
+    transform: translateY(-6px) scale(1.01);
+  }
+  50% {
+    transform: translateY(-9px) scale(1.01);
+  }
+  100% {
+    transform: translateY(-6px) scale(1.01);
+  }
+}
+
+.stat-card-remainingTask {
+  background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+}
+
+.stat-card-completedTask {
+  background: linear-gradient(135deg, #ec5300 0%, #fc9643 100%);
+}
+.stat-card-totalPaid {
+  background: linear-gradient(135deg, #ff8127 0%, #fdba74 100%);
+}
+
+.stat-card-pendingPayments {
+  background-color: #fef9f4;
+  color: #1e293b;
+  box-shadow: 0 10px 20px rgb(0 0 0 / 0.05);
+  position: relative;
+}
+
+.hr-stat-header h3 {
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.hr-stat-main {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  font-weight: 700;
+  font-size: 40px;
+}
+
+.hr-stat-icon {
+  font-size: 30px;
+}
+
+.hr-stat-subtext {
+  font-weight: 300;
+  font-size: 10px;
+}
+
+.hr-stat-subtext-small {
+  font-weight: 300;
+  font-size: 10px;
+  max-width: 180px;
+  line-height: 1;
+}
+
+.hr-stat-link {
+  font-weight: 500;
+  font-size: 0.9rem;
+  color: #ffffff;
+  cursor: pointer;
+  user-select: none;
+}
+
+.hr-semi-circle-progress-container {
+  display: flex;
+  justify-content: center;
+  margin: 0.5rem 0;
+}
+
+.hr-progress-bg-semi {
+  stroke: #f3f3f3;
+}
+
+.hr-progress-bar-semi {
+  stroke: #ff5003;
+  stroke-linecap: round;
+  transition: stroke-dashoffset 0.5s ease;
+}
+
+.hr-progress-text-semi {
+  font-size: 15px;
+  fill: #1e293b;
+  font-weight: 700;
+}
+
+.hr-dashboard-lower-row {
+  display: flex;
+  gap: 2rem;
+  flex-wrap: wrap;
+  margin-top: 1rem;
+}
+
+.hr-recently-hired-card {
+  background-color: white;
+  flex: 1;
+  min-width: 280px;
+  border-radius: 12px;
+  padding: 1rem 1.2rem;
+  box-shadow: 0 4px 12px rgb(0 0 0 / 0.1);
+  display: flex;
+  flex-direction: column;
+}
+
+.hr-recently-hired-card h3 {
+  font-weight: 700;
+  font-size: 1.3rem;
+  color: #1e293b;
+  margin-bottom: 1rem;
+}
+
+.hr-recently-hired-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  flex-grow: 1;
+}
+
+.hr-recently-hired-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid #e5e7eb;
+  font-size: 0.95rem;
+  color: #334155;
+}
+
+.hr-hired-name {
+  font-weight: 600;
+  flex: 2;
+  text-align: left;
+}
+
+.hr-hired-department {
+  flex: 1;
+  text-align: left;
+  font-weight: 500;
+  color: #64748b;
+}
+
+.hr-hired-job-title {
+  flex: 1;
+  text-align: left;
+  font-weight: 400;
+  color: #334155;
+}
+
+.hr-hired-hired-date {
+  flex: 1;
+  text-align: right;
+  font-weight: 300;
+  color: #64748b;
+}
+
+.hr-salary-history-card,
+.hr-hired-history-card {
+  background-color: white;
+  flex: 2;
+  min-width: 360px;
+  border-radius: 12px;
+  padding: 1rem 1.2rem;
+  box-shadow: 0 4px 12px rgb(0 0 0 / 0.1);
+  display: flex;
+  flex-direction: column;
+}
+
+.hr-salary-history-header,
+.hr-hired-history-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.hr-salary-history-header h3,
+.hr-hired-history-header h3 {
+  font-weight: 700;
+  font-size: 1.3rem;
+  color: #1e293b;
+}
+
+.hr-yearly-select {
+  padding: 0.3rem 0.6rem;
+  border-radius: 6px;
+  background-color: transparent;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #334155;
+  cursor: pointer;
+}
+
+.hr-bottom-cards-row {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.hr-bottom-card {
+  background-color: #f9fafb;
+  border-radius: 12px;
+  padding: 1rem 1.5rem;
+  flex: 1;
+  min-width: 140px;
+  box-shadow: 0 2px 8px rgb(0 0 0 / 0.05);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  color: #334155;
+}
+
+.hr-bottom-card-title {
+  font-weight: 600;
+  font-size: 0.85rem;
+  margin-bottom: 0.3rem;
+  color: #64748b;
+}
+
+.hr-bottom-card-name {
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: #0f172a;
+}
+
+.hr-bottom-card-sub {
+  font-weight: 500;
+  font-size: 0.9rem;
+  color: #64748b;
+}
+
+.hr-bottom-card-icon {
+  font-size: 1.8rem;
+  color: #334155;
+  margin: 0.3rem 0;
+}
+
+@media (max-width: 768px) {
+  .hr-dashboard-stats-row,
+  .hr-dashboard-lower-row {
+    flex-direction: column;
+  }
+
+  .hr-stat-card,
+  .hr-salary-history-card,
+  .hr-hired-history-card {
+    min-width: 100%;
+  }
+
+  .hr-bottom-cards-row {
+    flex-direction: column;
+  }
+}
