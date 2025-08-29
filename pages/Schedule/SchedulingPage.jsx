@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import DataTable from "react-data-table-component";
-import { FaFilter } from "react-icons/fa";
+import { FaFilter, FaEdit, FaEye } from "react-icons/fa";
 import './SchedulingPage.css';
 import ScheduleInformationModal from './Modals/ScheduleInformationModal';
 import EditScheduleModal from './Modals/EditScheduleModal';
@@ -150,18 +150,20 @@ const SchedulingPage = () => {
     {
       name: "Action",
       cell: (row) => (
-        <div className="schedule-action-buttons">
-          <button
-            className="btn-update"
+        <div className="schedule-actions">
+          <button 
+            className="schedule-action-btn update-btn"
             onClick={() => handleEditClick(row)}
+            title="Update Schedule"
           >
-            Update
+            <FaEdit size={14} />
           </button>
-          <button
-            className="btn-view"
+          <button 
+            className="schedule-action-btn view-btn"
             onClick={() => handleViewDetails(row)}
+            title="View Details"
           >
-            View Details
+            <FaEye size={14} />
           </button>
         </div>
       ),
