@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import api from "../../../api/api";
 import "./EmployeeUpdateModal.css";
 
 const EmployeeUpdateModal = ({ isOpen, onClose, employee, onUpdateEmployee }) => {
@@ -10,20 +11,71 @@ const EmployeeUpdateModal = ({ isOpen, onClose, employee, onUpdateEmployee }) =>
     currentRole: ""
   });
 
-  const departmentOptions = [
-    "Sales",
-    "Marketing", 
-    "Compliance",
-    "Human Resources",
-    "Finance",
-    "IT",
-    "Operations"
-  ];
+  const [availableDepartments, setAvailableDepartments] = useState([]);
+  const [departmentData, setDepartmentData] = useState([]);
+  const [availableJobTitles, setAvailableJobTitles] = useState([]);
+  const [isLoadingDepartments, setIsLoadingDepartments] = useState(false);
 
   const roleOptions = [
     "Employee",
     "HR", 
   ];
+
+  useEffect(() => {
+    const fetchDepartments = async () => {
+      try {
+        setIsLoadingDepartments(true);
+        const { data } = await api.get("/department");
+        
+        setDepartmentData(data);
+        
+        const departmentNames = data.map(dept => dept.departmentName).sort();
+        setAvailableDepartments(departmentNames);
+      } catch (err) {
+        console.error("Error fetching departments:", err);
+        // Fallback to hardcoded options if API fails
+        setAvailableDepartments([
+          "Sales",
+          "Marketing", 
+          "Compliance",
+          "Human Resources",
+          "Finance",
+          "IT",
+          "Operations"
+        ]);
+        setDepartmentData([]);
+      } finally {
+        setIsLoadingDepartments(false);
+      }
+    };
+
+    if (isOpen) {
+      fetchDepartments();
+    }
+  }, [isOpen]);
+
+
+  useEffect(() => {
+    if (!formData.department || departmentData.length === 0) {
+      setAvailableJobTitles([]);
+      return;
+    }
+
+   
+    const selectedDepartment = departmentData.find(
+      dept => dept.departmentName === formData.department
+    );
+
+    if (selectedDepartment && selectedDepartment.jobTitles) {
+    
+      const jobTitles = selectedDepartment.jobTitles
+        .filter(title => title && title.trim() !== "")
+        .sort();
+      setAvailableJobTitles(jobTitles);
+    } else {
+      setAvailableJobTitles([]);
+    }
+  }, [formData.department, departmentData]);
 
   useEffect(() => {
     if (employee && isOpen) {
@@ -39,16 +91,24 @@ const EmployeeUpdateModal = ({ isOpen, onClose, employee, onUpdateEmployee }) =>
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [name]: value
-    }));
+    setFormData(prev => {
+      const newFormData = {
+        ...prev,
+        [name]: value
+      };
+      
+ 
+      if (name === 'department' && value !== prev.department) {
+        newFormData.jobTitle = "";
+      }
+      
+      return newFormData;
+    });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (employee) {
-      
       const { currentRole, ...updateData } = formData;
       onUpdateEmployee(employee._id, updateData);
     }
@@ -56,7 +116,6 @@ const EmployeeUpdateModal = ({ isOpen, onClose, employee, onUpdateEmployee }) =>
   };
 
   const handleCancel = () => {
-    
     if (employee) {
       setFormData({
         employeeNumber: employee.employeeNumber || "",
@@ -120,15 +179,31 @@ const EmployeeUpdateModal = ({ isOpen, onClose, employee, onUpdateEmployee }) =>
 
           <div className="form-group">
             <label htmlFor="jobTitle">Job Title</label>
-            <input
-              type="text"
+            <select
               id="jobTitle"
               name="jobTitle"
               value={formData.jobTitle}
               onChange={handleInputChange}
-              className="form-input"
+              className="form-select"
               required
-            />
+              disabled={!formData.department || isLoadingDepartments}
+            >
+              <option value="">
+                {!formData.department 
+                  ? "Select department first" 
+                  : isLoadingDepartments 
+                  ? "Loading..." 
+                  : "Select Job Title"}
+              </option>
+              {availableJobTitles.map((jobTitle) => (
+                <option key={jobTitle} value={jobTitle}>
+                  {jobTitle}
+                </option>
+              ))}
+            </select>
+            {formData.department && availableJobTitles.length === 0 && !isLoadingDepartments && (
+              <small className="no-options-note">No job titles available for this department</small>
+            )}
           </div>
 
           <div className="form-group">
@@ -140,14 +215,20 @@ const EmployeeUpdateModal = ({ isOpen, onClose, employee, onUpdateEmployee }) =>
               onChange={handleInputChange}
               className="form-select"
               required
+              disabled={isLoadingDepartments}
             >
-              <option value="">Select Department</option>
-              {departmentOptions.map((dept) => (
+              <option value="">
+                {isLoadingDepartments ? "Loading departments..." : "Select Department"}
+              </option>
+              {availableDepartments.map((dept) => (
                 <option key={dept} value={dept}>
                   {dept}
                 </option>
               ))}
             </select>
+            {isLoadingDepartments && (
+              <small className="loading-note">Fetching departments...</small>
+            )}
           </div>
 
           <div className="form-group">
@@ -188,6 +269,7 @@ const EmployeeUpdateModal = ({ isOpen, onClose, employee, onUpdateEmployee }) =>
             <button 
               type="submit" 
               className="save-button"
+              disabled={isLoadingDepartments}
             >
               Save Changes
             </button>
