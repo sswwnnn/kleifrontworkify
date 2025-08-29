@@ -1,11 +1,5 @@
 import { Bars3Icon } from "@heroicons/react/24/solid";
-import {
-  Avatar,
-  Menu,
-  MenuHandler,
-  MenuItem,
-  MenuList,
-} from "@material-tailwind/react";
+import { Avatar, Menu, MenuHandler, MenuItem, MenuList } from "@material-tailwind/react";
 import React, { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import { UserCircleIcon } from "@heroicons/react/24/solid";
@@ -45,9 +39,8 @@ const Navbar = () => {
           <img src={Logo} alt="Company Logo" className="h-12 w-12 rounded" />
           <span className="text-white font-bold text-xl">workify</span>
         </NavLink>
-
-        {/* Desktop Navigation */}
-        <div className="flex items-center gap-8">
+        
+        <div className="hidden lg:flex items-center gap-8 ml-auto">
           <NavLink
             to="/contact"
             className={({ isActive }) =>
@@ -59,7 +52,7 @@ const Navbar = () => {
             Contact Us
           </NavLink>
           
-          {/* Dashboard link only visible when user is logged in */}
+        
           {user && (
             <NavLink
               to="/dashboard"
@@ -73,7 +66,6 @@ const Navbar = () => {
             </NavLink>
           )}
           
-          {/* Conditional User Actions */}
           {!user ? (
             <NavLink
               to="/login"
@@ -86,27 +78,26 @@ const Navbar = () => {
               Login
             </NavLink>
           ) : (
-           
-           <Menu>
-  <MenuHandler>
-    {user.photoURL ? (
-      <Avatar
-        src={user.photoURL}
-        alt="User"
-        className="cursor-pointer"
-        referrerPolicy="no-referrer"
-      />
-    ) : (
-      <UserCircleIcon
-        className="h-10 w-10 text-white cursor-pointer"
-      />
-    )}
-  </MenuHandler>
-  <MenuList className="bg-white rounded-md shadow-lg">
-    <MenuItem
-      onClick={handleLogout}
-      className="text-primary text-center hover:bg-red-50"
-    >
+            <Menu>
+              <MenuHandler>
+                {user.photoURL ? (
+                  <Avatar
+                    src={user.photoURL}
+                    alt="User"
+                    className="cursor-pointer"
+                    referrerPolicy="no-referrer"
+                  />
+                ) : (
+                  <UserCircleIcon
+                    className="h-10 w-10 text-white cursor-pointer"
+                  />
+                )}
+              </MenuHandler>
+              <MenuList className="bg-white rounded-md shadow-lg">
+                <MenuItem
+                  onClick={handleLogout}
+                  className="text-primary text-center hover:bg-red-50"
+                >
                   Logout
                 </MenuItem>
               </MenuList>
@@ -114,7 +105,6 @@ const Navbar = () => {
           )}
         </div>
 
-        {/* Mobile Menu Button */}
         <div className="lg:hidden flex items-center">
           <Menu>
             <MenuHandler>
@@ -149,7 +139,6 @@ const Navbar = () => {
                 </NavLink>
               )}
 
-              {/* Conditional User Actions */}
               {!user ? (
                 <NavLink
                   to="/login"
