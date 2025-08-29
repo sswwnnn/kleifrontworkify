@@ -31,7 +31,7 @@ const Navbar = () => {
         : 'bg-transparent'
     }`}>
       <div className="w-11/12 mx-auto flex items-center justify-between py-4">
-        {/* Logo */}
+       
         <NavLink
           to="/"
           className="flex items-center gap-3 text-white font-bold text-lg"
@@ -40,27 +40,19 @@ const Navbar = () => {
           <span className="text-white font-bold text-xl">workify</span>
         </NavLink>
         
-        <div className="hidden lg:flex items-center gap-8 ml-auto">
+       
+        <div className="flex items-center gap-4">
           <NavLink
             to="/contact"
-            className={({ isActive }) =>
-              isActive
-                ? "bg-[#FF5003] text-white px-4 py-2 rounded-full font-medium transition-all duration-300"
-                : "text-white font-medium hover:bg-[#FF5003] hover:text-white px-4 py-2 rounded-full transition-all duration-300"
-            }
+            className="text-white font-medium hover:bg-[#FF5003] hover:text-white px-4 py-2 rounded-full transition-all duration-300 block"
           >
             Contact Us
           </NavLink>
           
-        
           {user && (
             <NavLink
               to="/dashboard"
-              className={({ isActive }) =>
-                isActive
-                  ? "bg-[#FF5003] text-white px-4 py-2 rounded-full font-medium transition-all duration-300"
-                  : "text-white font-medium hover:bg-[#FF5003] hover:text-white px-4 py-2 rounded-full transition-all duration-300"
-              }
+              className="text-white font-medium hover:bg-[#FF5003] hover:text-white px-4 py-2 rounded-full transition-all duration-300 block"
             >
               Dashboard
             </NavLink>
@@ -69,11 +61,7 @@ const Navbar = () => {
           {!user ? (
             <NavLink
               to="/login"
-              className={({ isActive }) =>
-                isActive
-                  ? "bg-[#FF5003] text-white px-4 py-2 rounded-full font-medium transition-all duration-300"
-                  : "text-white font-medium hover:bg-[#FF5003] hover:text-white px-4 py-2 rounded-full transition-all duration-300"
-              }
+              className="text-white font-medium hover:bg-[#FF5003] hover:text-white px-4 py-2 rounded-full transition-all duration-300 block"
             >
               Login
             </NavLink>
@@ -96,70 +84,57 @@ const Navbar = () => {
               <MenuList className="bg-white rounded-md shadow-lg">
                 <MenuItem
                   onClick={handleLogout}
-                  className="text-primary text-center hover:bg-red-50"
+                  className="text-red-600 text-center hover:bg-red-50"
                 >
                   Logout
                 </MenuItem>
               </MenuList>
             </Menu>
           )}
-        </div>
-
-        <div className="lg:hidden flex items-center">
-          <Menu>
-            <MenuHandler>
-              <button className="flex items-center p-2 rounded focus:outline-none">
-                <Bars3Icon className="h-8 w-8 text-white" />
-              </button>
-            </MenuHandler>
-            <MenuList className="lg:hidden flex flex-col p-4 gap-3 bg-[#334854] shadow-md">
-              {/* Mobile menu items */}
-              <NavLink
-                to="/contact"
-                className={({ isActive }) =>
-                  isActive
-                    ? "bg-[#FF5003] text-white px-4 py-2 rounded-full font-medium mx-2 text-center transition-all duration-300"
-                    : "text-white font-medium hover:bg-[#FF5003] hover:text-white px-4 py-2 rounded-full mx-2 transition-all duration-300"
-                }
-              >
-                Contact Us
-              </NavLink>
-
-              {/* Dashboard link only visible when user is logged in */}
-              {user && (
-                <NavLink
-                  to="/dashboard"
-                  className={({ isActive }) =>
-                    isActive
-                      ? "bg-[#FF5003] text-white px-4 py-2 rounded-full font-medium mx-2 text-center transition-all duration-300"
-                      : "text-white font-medium hover:bg-[#FF5003] hover:text-white px-4 py-2 rounded-full mx-2 transition-all duration-300"
-                  }
-                >
-                  Dashboard
-                </NavLink>
-              )}
-
-              {!user ? (
-                <NavLink
-                  to="/login"
-                  className={({ isActive }) =>
-                    isActive
-                      ? "bg-[#FF5003] text-white px-4 py-2 rounded-full font-medium mx-2 text-center transition-all duration-300"
-                      : "text-white font-medium hover:bg-[#FF5003] hover:text-white px-4 py-2 rounded-full mx-2 transition-all duration-300"
-                  }
-                >
-                  Login
-                </NavLink>
-              ) : (
-                <button
-                  onClick={handleLogout}
-                  className="text-white font-medium hover:bg-[#FF5003] hover:text-white px-4 py-2 rounded-full mx-2 transition-all duration-300"
-                >
-                  Logout
+          
+      
+          <div className="lg:hidden">
+            <Menu>
+              <MenuHandler>
+                <button className="flex items-center p-2 rounded focus:outline-none">
+                  <Bars3Icon className="h-8 w-8 text-white" />
                 </button>
-              )}
-            </MenuList>
-          </Menu>
+              </MenuHandler>
+              <MenuList className="flex flex-col p-4 gap-3 bg-[#334854] shadow-md lg:hidden">
+                <NavLink
+                  to="/contact"
+                  className="text-white font-medium hover:bg-[#FF5003] hover:text-white px-4 py-2 rounded-full transition-all duration-300 text-center"
+                >
+                  Contact Us
+                </NavLink>
+
+                {user && (
+                  <NavLink
+                    to="/dashboard"
+                    className="text-white font-medium hover:bg-[#FF5003] hover:text-white px-4 py-2 rounded-full transition-all duration-300 text-center"
+                  >
+                    Dashboard
+                  </NavLink>
+                )}
+
+                {!user ? (
+                  <NavLink
+                    to="/login"
+                    className="text-white font-medium hover:bg-[#FF5003] hover:text-white px-4 py-2 rounded-full transition-all duration-300 text-center"
+                  >
+                    Login
+                  </NavLink>
+                ) : (
+                  <button
+                    onClick={handleLogout}
+                    className="text-white font-medium hover:bg-[#FF5003] hover:text-white px-4 py-2 rounded-full transition-all duration-300 text-center"
+                  >
+                    Logout
+                  </button>
+                )}
+              </MenuList>
+            </Menu>
+          </div>
         </div>
       </div>
     </nav>
