@@ -1,91 +1,204 @@
-import { useState } from "react";
-import { toast } from "react-toastify";
-import useAxiosPublic from "../../hooks/useAxiosPublic";
+import React, { useState } from 'react';
+import emailjs from '@emailjs/browser';
+import './ContactUs.css';
 
 function ContactUs() {
-  const axiosPublic = useAxiosPublic();
-  const [email, setEmail] = useState("");
-  const [message, setMessage] = useState("");
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    phone: '',
+    inquiry_type: '',
+    message: ''
+  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [statusMessage, setStatusMessage] = useState({ text: '', type: '', visible: false });
 
-  //  users logic
+  React.useEffect(() => {
+    emailjs.init('Rs5OPAnW4XL2c7HTJ');
+  }, []);
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+    
+    setIsSubmitting(true);
+    setStatusMessage({ text: '', type: '', visible: false });
+    
+    const templateParams = {
+      name: formData.name,
+      email: formData.email,
+      phone: formData.phone || 'Not provided',
+      inquiry_type: formData.inquiry_type,
+      message: `Type of Inquiry: ${formData.inquiry_type}
+      
+Phone: ${formData.phone || 'Not provided'}
 
-    if (!email || !message) {
-      toast.error("Please fill in all fields");
-      return;
-    }
-
-    const contactInfo = { email, message };
-
-    axiosPublic
-      .post("/contact", contactInfo)
-      .then(() => {
-        toast.success("Your message has been sent successfully");
-      })
-      .catch((error) => {
-        toast.error(error?.message);
+Message: ${formData.message}`,
+      time: new Date().toLocaleString()
+    };
+    
+    try {
+      const response = await emailjs.send('service_8h3q289', 'template_s5bcw38', templateParams);
+      
+      if (response.status === 200) {
+        setStatusMessage({
+          text: "Thank you! Your message has been sent successfully. We'll get back to you within 24 business hours.",
+          type: 'success',
+          visible: true
+        });
+        setFormData({
+          name: '',
+          email: '',
+          phone: '',
+          inquiry_type: '',
+          message: ''
+        });
+        
+      
+        setTimeout(() => {
+          setStatusMessage(prev => ({ ...prev, visible: false }));
+        }, 5000);
+      } else {
+        throw new Error('Failed to send message');
+      }
+    } catch (error) {
+      console.error('EmailJS Error:', error);
+      setStatusMessage({
+        text: 'Sorry, there was an error sending your message. Please try again or contact us directly.',
+        type: 'error',
+        visible: true
       });
-
-    setEmail("");
-    setMessage("");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
-    <div className="min-h-screen py-6 md:py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-lg mx-auto p-4 md:p-8 rounded-lg shadow-lg">
-        {/* Company Address */}
-        <div className="text-center mb-8">
-          <h2 className="text-3xl font-semibold">Contact Us</h2>
-          <p className="mt-2">We'd love to hear from you!</p>
+    <div className="contact-container">
+      {/* Animated Background Elements */}
+      <div className="bg-animations">
+        <div className="moving-particle-1"></div>
+        <div className="moving-particle-2"></div>
+        <div className="moving-particle-3"></div>
+        
+        <div className="central-ring-1"></div>
+        <div className="central-ring-2"></div>
+        
+        <div className="floating-shapes shape-1"></div>
+        <div className="floating-shapes shape-2"></div>
+        <div className="floating-shapes shape-3"></div>
+        
+        <div className="data-stream stream-1"></div>
+        <div className="data-stream stream-2"></div>
+        <div className="data-stream stream-3"></div>
+      </div>
+
+      <div className="container">
+        {/* Header */}
+        <div className="header">
+          <h1>Contact Us</h1>
         </div>
 
-        <div className="p-4 rounded-lg mb-8">
-          <h3 className="text-xl font-semibold">Our Company</h3>
-          <p className="mt-2">1234 Street Name, City, Country</p>
+        {/* Main Content Grid */}
+        <div className="content-grid">
+       
+          {/*Form Section */}
+          <div className="form-section">
+            <div className="response-badge">Building connections</div>
+            
+            <h2>Send Us a Message</h2>
+            
+            <form onSubmit={handleSubmit}>
+              <div className="form-row">
+                <div className="form-group">
+                  <label htmlFor="name">Full Name <span className="required">*</span></label>
+                  <input 
+                    type="text" 
+                    id="name" 
+                    name="name" 
+                    value={formData.name}
+                    onChange={handleInputChange}
+                    required 
+                  />
+                </div>
+                <div className="form-group">
+                  <label htmlFor="email">Email Address <span className="required">*</span></label>
+                  <input 
+                    type="email" 
+                    id="email" 
+                    name="email" 
+                    value={formData.email}
+                    onChange={handleInputChange}
+                    required 
+                  />
+                </div>
+              </div>
+              
+              <div className="form-group">
+                <label htmlFor="phone">Phone Number (Optional)</label>
+                <input 
+                  type="tel" 
+                  id="phone" 
+                  name="phone" 
+                  value={formData.phone}
+                  onChange={handleInputChange}
+                />
+              </div>
+              
+              <div className="form-group">
+                <label htmlFor="inquiry_type">Type of Inquiry <span className="required">*</span></label>
+                <select 
+                  id="inquiry_type" 
+                  name="inquiry_type" 
+                  value={formData.inquiry_type}
+                  onChange={handleInputChange}
+                  required
+                >
+                  <option value="">Please select...</option>
+                  <option value="Technical Support">Technical Support</option>
+                  <option value="Feature Request">Feature Request</option>
+                  <option value="General Inquiry">General Inquiry</option>
+                </select>
+              </div>
+              
+              <div className="form-group">
+                <label htmlFor="message">Describe Your Issue or Question <span className="required">*</span></label>
+                <textarea 
+                  id="message" 
+                  name="message" 
+                  value={formData.message}
+                  onChange={handleInputChange}
+                  placeholder="Please provide as much detail as possible to help us assist you better..." 
+                  required
+                />
+              </div>
+              
+              <button type="submit" className="submit-btn" disabled={isSubmitting}>
+                {isSubmitting ? (
+                  <>
+                    <span className="loading"></span>
+                    Sending...
+                  </>
+                ) : (
+                  'Send Message →'
+                )}
+              </button>
+              
+              {statusMessage.visible && (
+                <div className={`status-message ${statusMessage.type}`}>
+                  {statusMessage.text}
+                </div>
+              )}
+            </form>
+          </div>
         </div>
-
-        {/* Contact Form */}
-        <form onSubmit={handleSubmit} className="space-y-6">
-          <div>
-            <label htmlFor="email" className="block text-sm font-medium ">
-              Your Email
-            </label>
-            <input
-              type="email"
-              id="email"
-              name="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-              className="text-primary mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary focus:border-primary"
-            />
-          </div>
-
-          <div>
-            <label htmlFor="message" className="block text-sm font-medium ">
-              Your Message
-            </label>
-            <textarea
-              id="message"
-              name="message"
-              value={message}
-              onChange={(e) => setMessage(e.target.value)}
-              rows="4"
-              required
-              className="text-primary mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary focus:border-primary"
-            />
-          </div>
-
-          <div>
-            <button
-              type="submit"
-              className="btn w-full bg-primary text-white py-2 px-4 rounded-md hover:text-primary focus:outline-none focus:ring-2 focus:ring-primary"
-            >
-              Send Message
-            </button>
-          </div>
-        </form>
       </div>
     </div>
   );
