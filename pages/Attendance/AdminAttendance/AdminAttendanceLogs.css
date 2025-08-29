@@ -67,7 +67,6 @@
   border-color: #ff5003;
 }
 
-/* Filter Container Styles */
 .admin-attendance-filter-container {
   position: relative;
   flex-shrink: 0;
@@ -152,7 +151,7 @@
   background-color: #f9fafb;
 }
 
-.admin-attendance-filter-option.selected {
+.admin-attendance-filter-option.active {
   background-color: #fff7ed;
   color: #ff5003;
   font-weight: 500;
@@ -200,7 +199,6 @@
   overflow-x: auto;
 }
 
-/* DataTable Custom Styles for Admin Attendance Table */
 .admin-attendance-table-container .rdt_Table {
   border-radius: 0 !important;
 }
@@ -212,11 +210,11 @@
 
 .admin-attendance-table-container .rdt_TableHead {
   border-radius: 0 !important;
-  color: #ffffff !important;
+  color: black !important;
 }
 
 .admin-attendance-table-container .rdt_TableHeadRow .rdt_TableCol {
-  color: #ffffff !important;
+  color: #ffff !important;
   font-weight: 600;
   padding: 0.75rem 1.5rem;
 }
@@ -239,6 +237,28 @@
   color: #ffffff !important;
 }
 
+.admin-attendance-table-container .rdt_TableRow[style*="linear-gradient"] {
+  color: #000000 !important;
+}
+
+.admin-attendance-table-container .rdt_TableRow[style*="linear-gradient"] .rdt_TableCell {
+  color: #000000 !important;
+}
+
+.admin-attendance-table-container .rdt_TableRow[style*="linear-gradient"] .rdt_TableCell:nth-child(1),
+.admin-attendance-table-container .rdt_TableRow[style*="linear-gradient"] .rdt_TableCell:nth-child(2),
+.admin-attendance-table-container .rdt_TableRow[style*="linear-gradient"] .rdt_TableCell:nth-child(7),
+.admin-attendance-table-container .rdt_TableRow[style*="linear-gradient"] .rdt_TableCell:nth-child(8),
+.admin-attendance-table-container .rdt_TableRow[style*="linear-gradient"] .rdt_TableCell:nth-child(9) {
+  color: #000000 !important;
+}
+
+.admin-attendance-table-container .rdt_TableRow:hover .admin-attendance-edit-input,
+.admin-attendance-table-container .rdt_TableRow:hover .admin-attendance-edit-select {
+  color: #000000 !important;
+  background-color: #ffffff !important;
+}
+
 .admin-attendance-table-container .rdt_TableCell {
   padding: 0.75rem 1.5rem;
 }
@@ -247,7 +267,6 @@
   border-radius: 0 !important;
 }
 
-/* Status Badge Styles */
 .admin-attendance-status-badge {
   padding: 0.5rem 1rem;
   border-radius: 9999px;
@@ -293,35 +312,19 @@
   color: #383d41;
 }
 
-/* Action Buttons */
-.admin-attendance-action-buttons {
+.flex {
   display: flex;
-  gap: 8px;
+}
+
+.gap-2 {
+  gap: 0.5rem;
+}
+
+.justify-center {
   justify-content: center;
-  align-items: center;
 }
 
-.admin-attendance-update-btn {
-  background-color: #FF5003;
-  color: white;
-  border: none;
-  padding: 8px 16px;
-  border-radius: 4px;
-  font-size: 12px;
-  font-weight: 500;
-  cursor: pointer;
-  transition: background-color 0.2s;
-  font-family: 'Poppins', sans-serif;
-  min-width: 90px;
-  text-align: center;
-  white-space: nowrap;
-}
-
-.admin-attendance-update-btn:hover {
-  background-color: #e6460a;
-}
-
-.admin-attendance-save-btn {
+.admin-attendance-save-button {
   background-color: #22c55e;
   color: white;
   border: none;
@@ -334,16 +337,16 @@
   transition: all 0.2s;
 }
 
-.admin-attendance-save-btn:hover {
+.admin-attendance-save-button:hover {
   background-color: #16a34a;
   transform: translateY(-1px);
 }
 
-.admin-attendance-save-btn:active {
+.admin-attendance-save-button:active {
   transform: translateY(0);
 }
 
-.admin-attendance-cancel-btn {
+.admin-attendance-cancel-button {
   background-color: #dc2626;
   color: white;
   border: none;
@@ -356,55 +359,37 @@
   transition: all 0.2s;
 }
 
-.admin-attendance-cancel-btn:hover {
+.admin-attendance-cancel-button:hover {
   background-color: #b91c1c;
   transform: translateY(-1px);
 }
 
-.admin-attendance-cancel-btn:active {
+.admin-attendance-cancel-button:active {
   transform: translateY(0);
 }
 
-/* Button Loading States */
-.admin-attendance-save-btn.loading,
-.admin-attendance-update-btn.loading {
-  position: relative;
-  color: transparent;
+.admin-attendance-update-button {
+  background-color: #ff5003;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
 }
 
-.admin-attendance-save-btn.loading::after,
-.admin-attendance-update-btn.loading::after {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 16px;
-  height: 16px;
-  margin: -8px 0 0 -8px;
-  border: 2px solid rgba(255, 255, 255, 0.3);
-  border-top: 2px solid white;
-  border-radius: 50%;
-  animation: spin 1s linear infinite;
+.admin-attendance-update-button:hover {
+  background-color: #e04803;
+  transform: translateY(-1px);
 }
 
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+.admin-attendance-update-button:active {
+  transform: translateY(0);
 }
 
-/* Success Animation */
-@keyframes successPulse {
-  0% { transform: scale(1); }
-  50% { transform: scale(1.05); }
-  100% { transform: scale(1); }
-}
-
-.admin-attendance-save-btn.success {
-  animation: successPulse 0.6s ease;
-  background: linear-gradient(135deg, #198754 0%, #2eb553 100%);
-}
-
-/* Edit Input Enhancements */
 .admin-attendance-edit-input, .admin-attendance-edit-select {
   width: 100%;
   padding: 8px 12px;
@@ -412,6 +397,7 @@
   border-radius: 6px;
   font-size: 13px;
   background-color: white;
+  color: #000000 !important;
   transition: all 0.3s ease;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
@@ -455,18 +441,5 @@
   
   .admin-attendance-table-container {
     overflow-x: scroll;
-  }
-  
-  .admin-attendance-action-buttons {
-    flex-direction: row;
-    gap: 4px;
-  }
-  
-  .admin-attendance-update-btn,
-  .admin-attendance-save-btn,
-  .admin-attendance-cancel-btn {
-    min-width: 80px;
-    font-size: 11px;
-    padding: 6px 12px;
   }
 }
