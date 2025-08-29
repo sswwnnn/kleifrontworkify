@@ -82,7 +82,6 @@ Message: ${formData.message}`,
 
   return (
     <div className="contact-container">
-      {/* Animated Background Elements */}
       <div className="bg-animations">
         <div className="moving-particle-1"></div>
         <div className="moving-particle-2"></div>
@@ -101,12 +100,9 @@ Message: ${formData.message}`,
       </div>
 
       <div className="container">
-        {/* Header */}
         <div className="header">
-          <h1>Contact Us</h1>
+          <h1></h1>
         </div>
-
-        {/* Main Content Grid */}
         <div className="content-grid">
        
           {/*Form Section */}
