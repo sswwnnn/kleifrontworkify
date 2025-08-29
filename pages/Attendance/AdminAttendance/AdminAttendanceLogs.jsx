@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import DataTable from "react-data-table-component";
 import './AdminAttendanceLogs.css';
 import AddLogsModal from './Modals/AddLogsModal';
-import { FaCheckCircle, FaTimesCircle } from "react-icons/fa";
+import { FaCheckCircle, FaTimesCircle, FaEdit } from "react-icons/fa";
 import api from "../../../api/api";
 import { FaFilter } from "react-icons/fa";
 
@@ -18,7 +18,6 @@ const AdminAttendanceLogs = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // Fetch departments from the department API
   useEffect(() => {
     const fetchDepartments = async () => {
       try {
@@ -202,6 +201,11 @@ const AdminAttendanceLogs = () => {
       sortFunction: (rowA, rowB) => {
         return rowA.employeeName.localeCompare(rowB.employeeName);
       },
+      cell: (row) => (
+        <span style={{ color: '#000000' }}>
+          {row.employeeName}
+        </span>
+      ),
     },
     {
       name: "Department",
@@ -209,6 +213,11 @@ const AdminAttendanceLogs = () => {
       sortable: true,
       width: "12%",
       center: true,
+      cell: (row) => (
+        <span style={{ color: '#000000' }}>
+          {row.department}
+        </span>
+      ),
     },
     {
       name: "Date",
@@ -227,7 +236,11 @@ const AdminAttendanceLogs = () => {
             setAttendanceData(newData);
           }}
         />
-      ) : row.date,
+      ) : (
+        <span style={{ color: '#000000' }}>
+          {row.date}
+        </span>
+      ),
     },
     {
       name: "Clock In",
@@ -296,6 +309,11 @@ const AdminAttendanceLogs = () => {
       sortable: true,
       width: "8%",
       center: true,
+      cell: (row) => (
+        <span style={{ color: '#000000' }}>
+          {row.totalHrs}
+        </span>
+      ),
     },
     {
       name: "Regular Hrs",
@@ -303,6 +321,11 @@ const AdminAttendanceLogs = () => {
       sortable: true,
       width: "8%",
       center: true,
+      cell: (row) => (
+        <span style={{ color: '#000000' }}>
+          {row.regularHrs}
+        </span>
+      ),
     },
     {
       name: "Overtime",
@@ -310,13 +333,18 @@ const AdminAttendanceLogs = () => {
       sortable: true,
       width: "8%",
       center: true,
+      cell: (row) => (
+        <span style={{ color: '#000000' }}>
+          {row.overtime}
+        </span>
+      ),
     },
     {
       name: "Action",
       cell: (row) => editingRow === row.id ? (
-        <div className="admin-attendance-action-buttons">
+        <div className="flex gap-2 justify-center">
           <button 
-            className="admin-attendance-save-btn" 
+            className="admin-attendance-save-button" 
             onClick={async () => {
               const calculatedHours = calculateHours(row.clockIn, row.clockOut);
               const payload = {
@@ -334,22 +362,25 @@ const AdminAttendanceLogs = () => {
                 alert("Error updating attendance log: " + (err.response?.data?.message || err.message));
               }
             }}
+            title="Save Changes"
           >
             <FaCheckCircle size={16} />
           </button>
           <button 
-            className="admin-attendance-cancel-btn" 
+            className="admin-attendance-cancel-button" 
             onClick={handleCancel}
+            title="Cancel Changes"
           >
             <FaTimesCircle size={16} />
           </button>
         </div>
       ) : (
         <button 
-          className="admin-attendance-update-btn"
+          className="admin-attendance-update-button"
           onClick={() => handleEdit(row.id)}
+          title="Update Attendance"
         >
-          Update
+          <FaEdit size={16} />
         </button>
       ),
       width: "9%",
@@ -393,10 +424,12 @@ const AdminAttendanceLogs = () => {
         border: '2px solid #FFD699',
         borderRadius: '8px',
         boxShadow: '0 4px 12px rgba(255, 165, 0, 0.15)',
+        color: '#000000', 
         '&:hover': {
           background: 'linear-gradient(135deg, #fff3cd 0%, #ffe8a1 100%)',
           borderColor: '#FFB366',
           boxShadow: '0 6px 16px rgba(255, 165, 0, 0.2)',
+          color: '#000000', 
         },
       },
     },
