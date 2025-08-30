@@ -3,14 +3,11 @@ import { Link } from "react-router-dom";
 const Footer = () => {
   return (
     <footer className="relative bg-[#002347] text-white overflow-hidden">
-      {/* Background Design with Curves */}
+     
       <div className="absolute inset-0">
-        {/* Large curved shapes */}
         <div className="absolute -top-32 -left-32 w-96 h-96 bg-[#003366] opacity-30 rounded-full"></div>
         <div className="absolute top-20 -right-40 w-80 h-80 bg-[#004488] opacity-20 rounded-full"></div>
         <div className="absolute -bottom-20 left-1/3 w-64 h-64 bg-[#0055aa] opacity-25 rounded-full"></div>
-        
-        {/* Additional curved elements for depth */}
         <div className="absolute top-10 left-1/4 w-48 h-48 bg-[#003d66] opacity-15 rounded-full"></div>
         <div className="absolute bottom-0 right-1/4 w-72 h-72 bg-[#002a4d] opacity-20 rounded-full"></div>
       </div>
@@ -19,10 +16,10 @@ const Footer = () => {
       <div className="relative z-10 py-16">
         {/* Partnership Section */}
         <div className="text-center mb-16">
-          <h2 className="text-4xl font-bold mb-4">Want to partner with us?</h2>
+          <h2 className="text-4xl font-bold mb-4">We'd Love to Hear From You!</h2>
           <p className="text-lg opacity-90 mb-8 max-w-2xl mx-auto">
-            If you're interested in our partnership and would like to find out some more information,
-            <br />one of our advisors is excited to help.
+            Have questions, feedback, or just want to say hello? Don’t hesitate to get in touch, we’re here to help and always happy to hear from you.
+            <br />
           </p>
           <Link 
             to="/contact" 
@@ -34,7 +31,6 @@ const Footer = () => {
 
         <div className="w-11/12 mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-            {/* Company Logo/Name */}
             <div className="md:col-span-1">
               <h3 className="text-2xl font-bold">
                 workify<span className="text-blue-300">.</span>
@@ -190,7 +186,7 @@ const Footer = () => {
                 <p className="mb-2">
                   <strong>Email:</strong>{" "}
                   <a href="mailto:info@workify.com" className="hover:text-blue-300">
-                    info@workify.com
+                    workifyteamcm@gmail.com
                   </a>
                 </p>
                 <p>
