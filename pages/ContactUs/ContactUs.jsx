@@ -114,7 +114,7 @@ Message: ${formData.message}`,
           <div className="form-section">
             <div className="response-badge">Building connections</div>
             
-            <h2>Send Us a Message</h2>
+            <h2>Contact Us</h2>
             
             <form onSubmit={handleSubmit}>
               <div className="form-row">
