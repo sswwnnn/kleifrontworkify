@@ -82,6 +82,11 @@ Message: ${formData.message}`,
 
   return (
     <div className="contact-container">
+      {/* Back Link */}
+      <a href="/" className="back-link">
+        Back
+      </a>
+
       <div className="bg-animations">
         <div className="moving-particle-1"></div>
         <div className="moving-particle-2"></div>
